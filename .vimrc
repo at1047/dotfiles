@@ -23,12 +23,12 @@ Plug 'SirVer/ultisnips'
     let g:UltiSnipsBackwardsForwardTrigger = '<s-tab>'
 
 Plug 'honza/vim-snippets'
+Plug 'christoomey/vim-tmux-navigator'
 
-"Plug 'ycm-core/YouCompleteMe', { 'do' : './install.py' }
-"    let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
-"    let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
-"    let g:SuperTabDefaultCompletionType = '<C-j>'
-"Plug 'christoomey/vim-tmux-navigator'
+Plug 'ycm-core/YouCompleteMe', { 'do' : './install.py' }
+    let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+    let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+    let g:SuperTabDefaultCompletionType = '<C-j>'
 call plug#end()
 
 syntax on
