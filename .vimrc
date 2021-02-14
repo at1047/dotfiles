@@ -5,18 +5,20 @@ Plug 'sheerun/vim-polyglot'
 Plug 'uiiaoo/java-syntax.vim'
 Plug 'ap/vim-css-color'
 Plug 'tpope/vim-surround'
+    let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 Plug 'scrooloose/nerdcommenter'
 Plug 'machakann/vim-highlightedyank'
 Plug 'ajh17/vimcompletesme'
-"Plug 'vimwiki/vimwiki'
 Plug 'tpope/vim-repeat'
 Plug 'justinmk/vim-sneak'
 Plug 'jiangmiao/auto-pairs'
+Plug 'mbbill/undotree'
+
 Plug 'lervag/vimtex'
     let g:tex_flavor='latex'
     let g:vimtex_view_method='skim'
     let g:vimtex_quickfix_mode=0
-    set conceallevel=1
+    let g:vimtex_subfile_start_local=1
 Plug 'SirVer/ultisnips'
     let g:UltiSnipsExpandTrigger = '<tab>'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
@@ -29,12 +31,29 @@ Plug 'ycm-core/YouCompleteMe', { 'do' : './install.py' }
     let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
     let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
     let g:SuperTabDefaultCompletionType = '<C-j>'
+    let g:ycm_filetype_blacklist={}
+    let g:ycm_show_diagnostics_ui = 0
+
+Plug 'iamcco/markdown-preview.nvim'
+    let g:mkdp_refresh_slow = 1
+    let g:mkdp_auto_close = 0
+    let g:mkdp_markdown_css='/Users/andrewtai/Documents/School/ME/3210/Notes/resources/github-markdown.css'
+    let g:mkdp_preview_options = {'disable_sync_scroll': 1}
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
+Plug 'junegunn/fzf.vim'
+let g:fzf_action = {
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit'
+      \ }
+Plug 'mhinz/vim-startify'
+
 call plug#end()
 
 syntax on
 "set t_Co=256
 "set background=dark
-"colorscheme iceberg 
+"colorscheme iceberg
 "highlight Normal ctermbg=NONE
 "highlight EndOfBuffer ctermbg=NONE
 "highlight Visual ctermbg=Grey
@@ -57,9 +76,9 @@ set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
-set smartindent
-set hlsearch
-set scrolloff=7
+filetype plugin indent on
+set nohlsearch
+set scrolloff=10
 set incsearch
 set smartcase
 set linebreak
@@ -70,25 +89,45 @@ set showmatch
 set wildmenu
 set splitbelow splitright
 set hidden
-set noshowmode
+"set noshowmode
 set foldcolumn=0
+set signcolumn=no
 set directory^=$HOME/.vim/tmp//
 set backspace=2
+set undodir=~/.vim/undodir
+set undofile
+set laststatus=2
+set statusline=%t
+
 
 
 " Remaps and commands
-
-map <space> /
+let mapleader = " "
 nnoremap O O<Esc>
 nnoremap o o<Esc>
-nnoremap <silent> <esc><esc> :nohls<cr>
+" nnoremap <silent> <esc><esc> :nohls<cr>
+
+nnoremap <silent> <leader>ud :UndotreeToggle<CR>
+
+" Split bindings
 nnoremap <C-h> <C-W>h
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
-map <F2> :NERDTreeToggle<CR>
+
+
 nmap <leader>sp :call <SID>SynStack()<CR>
 nmap <leader>tcc :call css_color#toggle()<CR>
+vnoremap <C-c> "*y
+
+" YCM Key bindings
+nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
+
+
+" FZF Key bindings
+nnoremap <silent> <C-p> :Files<cr>
+nnoremap <silent> <leader>bs :Buffers<cr>
+
 
 " Helper functions
 function! <SID>SynStack()
@@ -98,6 +137,15 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-
+function! TrimWhiteSpace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfunc
 
 " Scripts to run at the beginning
+augroup AUTOCMD
+  autocmd!
+  autocmd User VimtexEventQuit call vimtex#latexmk#clean(0)
+    autocmd BufWritePre * :call TrimWhiteSpace()
+augroup END

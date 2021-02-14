@@ -1,4 +1,4 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Enable Powerlevel10k instant prmpt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -116,7 +116,7 @@ alias gcp-ce-ssh='gcloud beta compute ssh --zone "asia-east2-a" "instance-1" --p
 alias vrc="vi ~/.vimrc"
 alias zrc="vi ~/.zshrc"
 alias resume="vi ~/Documents/resume/resume.tex"
-alias rezsh="source ~/.zshrc"
+alias reload="source ~/.zshrc"
 alias active="python3 ~/git/scripts/get-terminals.py"
 alias dotupdate="sh ~/git/dotfiles/cmd"
 alias ls="exa -al --color=always --group-directories-first"
@@ -129,13 +129,18 @@ alias timetable='python3 ~/.scripts/timetable.py'
 alias e_timetable='vi ~/.scripts/timetable.py'
 alias shop_list='cat ~/Dropbox/todo/shopping_list.txt'
 alias e_shop_list='vi ~/Dropbox/todo/shopping_list.txt'
+alias cal30='calcurse -r30 --format-apt="- %S -> %E\n\t%m\n%N"'
 #alias cs='cd ~/Documents/school/cs/1332/homework && cd '
 
 PATH=$PATH:"/usr/local/opt/todo-txt/bin"
 export TODOTXT_DEFAULT_ACTION=ls
 alias t='todo.sh'
-alias homework='todo.sh ls @homework'
-alias exams='todo.sh ls @exams'
+alias homework='todo.sh list @homework'
+alias homeworkall='todo.sh listall @homework'
+alias exams='calcurse -r30 --filter-pattern Midterm'
+alias examsall='calcurse -G --filter-pattern Midterm'
+
+alias 3210='cd ~/Documents/school/me/3210/notes'
 
 cs() {
     cd ~/Documents/School/cs/1332/homework/${1:-};
@@ -157,6 +162,9 @@ ZSH_HIGHLIGHT_STYLES[path]=''
 
 
 DEFAULT_USER=$USER
+fortune | cowsay
+source ~/.useful_commands.sh
+
 #neofetch
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
