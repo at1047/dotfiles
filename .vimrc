@@ -13,6 +13,8 @@ Plug 'tpope/vim-repeat'
 Plug 'justinmk/vim-sneak'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mbbill/undotree'
+Plug 'Yggdroot/indentLine'
+    let g:indentLine_char = '¦'
 
 Plug 'lervag/vimtex'
     let g:tex_flavor='latex'
@@ -33,6 +35,8 @@ Plug 'ycm-core/YouCompleteMe', { 'do' : './install.py' }
     let g:SuperTabDefaultCompletionType = '<C-j>'
     let g:ycm_filetype_blacklist={}
     let g:ycm_show_diagnostics_ui = 0
+    let g:ycm_always_populate_location_list = 1
+    let g:ycm_auto_hover=''
 
 Plug 'iamcco/markdown-preview.nvim'
     let g:mkdp_refresh_slow = 1
@@ -46,7 +50,6 @@ let g:fzf_action = {
       \ 'ctrl-s': 'split',
       \ 'ctrl-v': 'vsplit'
       \ }
-Plug 'mhinz/vim-startify'
 
 call plug#end()
 
@@ -68,6 +71,8 @@ set relativenumber
 "highlight clear SignColumn
 "hi jsFuncCall ctermfg=Red
 "hi VertSplit ctermbg=NONE ctermfg=grey
+set shell=/usr/bin/zsh
+set shellcmdflag=-ic
 set fillchars+=vert:\▏
 set noerrorbells
 set vb
@@ -98,8 +103,12 @@ set undodir=~/.vim/undodir
 set undofile
 set laststatus=2
 set statusline=%t
+set colorcolumn=80
 
-
+augroup colorcol
+    autocmd!
+    autocmd Filetype tex,md,markdown setlocal colorcolumn=0
+augroup END
 
 " Remaps and commands
 let mapleader = " "

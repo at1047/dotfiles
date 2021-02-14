@@ -5,11 +5,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+source ~/.env.sh
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/andrewtai/.oh-my-zsh"
+export ZSH="/home/andrew/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -120,7 +122,7 @@ alias reload="source ~/.zshrc"
 alias active="python3 ~/git/scripts/get-terminals.py"
 alias dotupdate="sh ~/git/dotfiles/cmd"
 alias ls="exa -al --color=always --group-directories-first"
-alias config='/usr/bin/git --git-dir=/Users/andrewtai/.cfg/ --work-tree=/Users/andrewtai'
+alias config='/usr/bin/git --git-dir=${HOMEDIR}/.cfg/ --work-tree=${HOMEDIR}'
 alias tmux='TERM=xterm-256color tmux'
 alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}\t{{.Status}}"'
 alias classes='cat ~/Documents/School/class_notes_general.txt'
@@ -143,12 +145,12 @@ alias examsall='calcurse -G --filter-pattern Midterm'
 alias 3210='cd ~/Documents/school/me/3210/notes'
 
 cs() {
-    cd ~/Documents/School/cs/1332/homework/${1:-};
+    cd ~/Documents/school/cs/1332/homework/${1:-};
 }
 
-export CLASSPATH=.:~/Documents/School/CS/1332/homework/aux/junit-4.12.jar:~/Documents/School/CS/1332/homework/aux/hamcrest-core-1.3.jar 
+export CLASSPATH=.:~/Documents/school/cs/1332/homework/aux/junit-4.12.jar:~/Documents/school/cs/1332/homework/aux/hamcrest-core-1.3.jar
 
-alias checkstyle='java -jar ~/Documents/School/CS/1332/homework/aux/checkstyle-8.12-all.jar -c ~/Documents/School/CS/1332/homework/aux/CS1332-checkstyle.xml'
+alias checkstyle='java -jar ~/Documents/school/cs/1332/homework/aux/checkstyle-8.12-all.jar -c ~/Documents/school/cs/1332/homework/aux/CS1332-checkstyle.xml'
 alias junit='java org.junit.runner.JUnitCore'
 
 
@@ -162,8 +164,6 @@ ZSH_HIGHLIGHT_STYLES[path]=''
 
 
 DEFAULT_USER=$USER
-fortune | cowsay
-source ~/.useful_commands.sh
 
 #neofetch
 
