@@ -6,7 +6,6 @@ Plug 'uiiaoo/java-syntax.vim'
 Plug 'ap/vim-css-color'
 Plug 'tpope/vim-surround'
     let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
-Plug 'scrooloose/nerdcommenter'
 Plug 'machakann/vim-highlightedyank'
 Plug 'ajh17/vimcompletesme'
 Plug 'tpope/vim-repeat'
@@ -41,10 +40,9 @@ Plug 'ycm-core/YouCompleteMe', { 'do' : './install.py' }
 Plug 'iamcco/markdown-preview.nvim'
     let g:mkdp_refresh_slow = 1
     let g:mkdp_auto_close = 0
-    let g:mkdp_markdown_css='/Users/andrewtai/Documents/School/ME/3210/Notes/resources/github-markdown.css'
     let g:mkdp_preview_options = {'disable_sync_scroll': 1}
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 let g:fzf_action = {
       \ 'ctrl-s': 'split',
@@ -71,8 +69,8 @@ set relativenumber
 "highlight clear SignColumn
 "hi jsFuncCall ctermfg=Red
 "hi VertSplit ctermbg=NONE ctermfg=grey
-set shell=/usr/bin/zsh
-set shellcmdflag=-ic
+"set shell=/usr/bin/zsh
+"set shellcmdflag=-ic
 set fillchars+=vert:\▏
 set noerrorbells
 set vb
@@ -102,8 +100,14 @@ set backspace=2
 set undodir=~/.vim/undodir
 set undofile
 set laststatus=2
-set statusline=%t
 set colorcolumn=80
+
+set statusline=
+set statusline+=\ %n "Buffer number
+set statusline+=\ \| "Seperator
+set statusline+=\ %f "File path
+set statusline+=\ %h%m%r%w
+set statusline+=[%4v] "Cursorcolumn
 
 augroup colorcol
     autocmd!
