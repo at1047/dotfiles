@@ -101,13 +101,18 @@ set undodir=~/.vim/undodir
 set undofile
 set laststatus=2
 set colorcolumn=80
-
+set conceallevel=0
 set statusline=
-set statusline+=\ %n "Buffer number
-set statusline+=\ \| "Seperator
-set statusline+=\ %f "File path
-set statusline+=\ %h%m%r%w
-set statusline+=[%4v] "Cursorcolumn
+set statusline+=\ %2n "Buffer number 2
+set statusline+=\ \| "Seperator 2
+set statusline+=\ %-51f "File path
+set statusline+=\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [
+set statusline+=%{(&modified)?'':'\ '}\ %M
+set statusline+=%{(&readonly)?'':'\ '}\ %R
+set statusline+=]
+set statusline+=[%04v] "Cursorcolumn
+set autoread
+set wildignore+=*.class,*.pdf
 
 augroup colorcol
     autocmd!
@@ -155,6 +160,26 @@ function! TrimWhiteSpace()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
 endfunc
+
+nnoremap <leader>ju :JunitTest<space>
+
+
+function! JunitWrite(junitFile)
+    set wildignore+=*.txt
+    "silent execute '!source ~/.scripts/junit.sh && junitT '.input('Which junit to execute: ', '', 'Junitfiles')
+    silent execute '!source ~/.scripts/junit.sh && junitT '.a:junitFile
+    execute 'redraw!'
+    execute '20split junit.txt'
+    set wildignore-=*.txt
+endfunc
+
+command! -bang -complete=customlist,GetJunitFiles -nargs=* JunitTest call JunitWrite(<f-args>)
+
+function! GetJunitFiles(ArgLead, CmdLine, CursorPos)
+    let files = split(substitute(substitute(globpath('.','*.java'), './', '', 'g'), '.java', '', 'g'), '\n')
+    return filter(files, 'v:val =~ a:ArgLead')
+endfunc
+
 
 " Scripts to run at the beginning
 augroup AUTOCMD
