@@ -1,17 +1,15 @@
-# Enable Powerlevel10k instant prmpt. Should stay close to the top of ~/.zshrc.
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source ~/.env.sh
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/andrew/.oh-my-zsh"
+export ZSH="/Users/andrewtai/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -32,14 +30,13 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -54,6 +51,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,70 +104,45 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-
-#The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/andrewtai/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/andrewtai/google-cloud-sdk/path.zsh.inc'; fi
-
- # The next line enables shell command completion for gcloud.
-if [ -f '/Users/andrewtai/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/andrewtai/google-cloud-sdk/completion.zsh.inc'; fi
-
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias iris='vi ~/qmk_firmware/keyboards/keebio/iris/keymaps/at1047/keymap.c'
+alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}\t{{.Status}}"'
+alias tmux='TERM=xterm-256color tmux'
+alias ls="exa -al --color=always --group-directories-first"
+alias reload="source ~/.zshrc"
 alias sand="cd ~/Desktop/sandbox"
-alias kube="kubectl"
-alias leetpy="sand && cd leetcode && cp template.py "
-alias gcp-ce-ssh='gcloud beta compute ssh --zone "asia-east2-a" "instance-1" --project "fluid-advantage-281715"'
 alias vrc="vi ~/.vimrc"
 alias zrc="vi ~/.zshrc"
-alias resume="vi ~/Documents/resume/resume.tex"
-alias reload="source ~/.zshrc"
-alias active="python3 ~/git/scripts/get-terminals.py"
-alias dotupdate="sh ~/git/dotfiles/cmd"
-alias ls="exa -al --color=always --group-directories-first"
-alias config='/usr/bin/git --git-dir=${HOMEDIR}/.cfg/ --work-tree=${HOMEDIR}'
-alias tmux='TERM=xterm-256color tmux'
-alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}\t{{.Status}}"'
-alias classes='cat ~/Documents/School/class_notes_general.txt'
-alias e_classes='vi ~/Documents/School/class_notes_general.txt'
-alias timetable='python3 ~/.scripts/timetable.py'
-alias e_timetable='vi ~/.scripts/timetable.py'
-alias shop_list='cat ~/Dropbox/todo/shopping_list.txt'
-alias e_shop_list='vi ~/Dropbox/todo/shopping_list.txt'
-alias cal30='calcurse -r30 --format-apt="- %S -> %E\n\t%m\n%N"'
-#alias cs='cd ~/Documents/school/cs/1332/homework && cd '
+alias school="cd ~/OneDrive\ -\ Georgia\ Institute\ of\ Technology/School"
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-PATH=$PATH:"/usr/local/opt/todo-txt/bin"
-export TODOTXT_DEFAULT_ACTION=ls
-alias t='todo.sh'
-alias homework='todo.sh list @homework'
-alias homeworkall='todo.sh listall @homework'
-alias exams='calcurse -r30 --filter-pattern Midterm'
-alias examsall='calcurse -G --filter-pattern Midterm'
-
-alias 3210='cd ~/Documents/school/me/3210/notes'
-
-cs() {
-    cd ~/Documents/school/cs/1332/homework/${1:-};
-}
-
-export CLASSPATH=.:~/Documents/school/cs/1332/homework/aux/junit-4.12.jar:~/Documents/school/cs/1332/homework/aux/hamcrest-core-1.3.jar
-
-alias checkstyle='java -jar ~/Documents/school/cs/1332/homework/aux/checkstyle-8.12-all.jar -c ~/Documents/school/cs/1332/homework/aux/CS1332-checkstyle.xml'
-alias junit='java org.junit.runner.JUnitCore'
+# Class specific
+alias faa="cd ~/Desktop/sandbox/FAA_A59A_Jet_Reduction"
+alias cs="cd ~/OneDrive\ -\ Georgia\ Institute\ of\ Technology/School/Spring\ 2022/CS\ 3600"
+alias me3057="cd ~/OneDrive\ -\ Georgia\ Institute\ of\ Technology/School/Spring\ 2022/ME\ 3057 "
 
 
-# zsh-syntax-highlighting customisation
-typeset -A ZSH_HIGHLIGHT_STYLES
-
-ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=green'
-ZSH_HIGHLIGHT_STYLES[precommand]='fg=green'
-ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=green'
-ZSH_HIGHLIGHT_STYLES[path]=''
 
 
-DEFAULT_USER=$USER
 
-#neofetch
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/andrewtai/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/andrewtai/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/andrewtai/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/andrewtai/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
