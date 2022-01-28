@@ -1,6 +1,6 @@
 " Plugins
 
-execute pathogen#infect()
+" execute pathogen#infect()
 
 call plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-startify'
@@ -16,7 +16,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'mbbill/undotree'
 Plug 'lervag/vimtex'
     let g:tex_conceal = ''
-    let g:tex_flavor='latex'
+"    let g:tex_flavor='latex'
     let g:vimtex_view_method='skim'
     let g:vimtex_quickfix_mode=0
     let g:vimtex_subfile_start_local=1
@@ -30,10 +30,11 @@ Plug 'honza/vim-snippets'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'iamcco/markdown-preview.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
     let g:mkdp_refresh_slow = 1
     let g:mkdp_auto_close = 0
     " let g:mkdp_preview_options = {'disable_sync_scroll': 1}
+    let g:mkdp_markdown_css = expand('~/.vim/plugged/markdown-preview.nvim/style.css')
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
