@@ -9,6 +9,7 @@ Plug 'uiiaoo/java-syntax.vim'
 " Plug 'ap/vim-css-color'
 Plug 'tpope/vim-surround'
     let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
+    let g:surround_{char2nr('b')} = "**\r**"
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-repeat'
 Plug 'justinmk/vim-sneak'
@@ -35,6 +36,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
     let g:mkdp_auto_close = 0
     " let g:mkdp_preview_options = {'disable_sync_scroll': 1}
     let g:mkdp_markdown_css = expand('~/.vim/plugged/markdown-preview.nvim/style.css')
+    let g:mkdp_theme = 'light'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -42,6 +44,7 @@ let g:fzf_action = {
       \ 'ctrl-s': 'split',
       \ 'ctrl-v': 'vsplit'
       \ }
+
 call plug#end()
 
 syntax on

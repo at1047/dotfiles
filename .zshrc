@@ -11,10 +11,15 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # <<< plugins>>>
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
-source ~/.zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-    zstyle ':autocomplete:*' min-input 1
-    zstyle ':autocomplete:*' insert-unambiguous yes
-    zstyle ':autocomplete:*' widget-style menu-complete
+# source ~/.zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+#     zstyle ':autocomplete:*' min-input 1
+#     zstyle ':autocomplete:*' insert-unambiguous yes
+#     zstyle ':autocomplete:*' widget-style menu-complete
+#
+#
+
+zstyle ':completion:*'  matcher-list 'm:{a-z}={A-Z}'
+autoload -U compinit  && compinit
 
 # System
 alias vi="nvim"
@@ -31,12 +36,8 @@ alias zrc="vi ~/.zshrc"
 
 # Class specific
 alias school="cd ~/OneDrive\ -\ Georgia\ Institute\ of\ Technology/School"
-alias faa="cd ~/Desktop/sandbox/FAA_A59A_Jet_Reduction"
-alias cs="cd ~/OneDrive\ -\ Georgia\ Institute\ of\ Technology/School/Spring\ 2022/CS\ 3600"
-alias me3057="cd ~/OneDrive\ -\ Georgia\ Institute\ of\ Technology/School/Spring\ 2022/ME\ 3057 "
-alias isye="cd ~/OneDrive\ -\ Georgia\ Institute\ of\ Technology/School/Spring\ 2022/ISYE\ 3025"
-alias psyc="cd ~/OneDrive\ -\ Georgia\ Institute\ of\ Technology/School/Spring\ 2022/PSYC\ 2220"
 alias matlab="/Applications/MATLAB_R2021b.app/bin/matlab"
+alias ml="cd ~/Library/CloudStorage/OneDrive-GeorgiaInstituteofTechnology/School/Fall\ 2022/CS\ 4641/CS4641_MLProject"
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
