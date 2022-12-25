@@ -65,3 +65,4 @@ unset __conda_setup
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/lib/ruby/gems/3.1.0/bin:$PATH"
 
+export PATH="/usr/local:$PATH"

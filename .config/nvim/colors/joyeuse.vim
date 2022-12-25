@@ -1,1 +1,1 @@
-/Users/andrew/Desktop/sandbox/joyeuse/colors/joyeuse.vim
+/home/andrew/Desktop/sandbox/joyeuse/colors/joyeuse.vim

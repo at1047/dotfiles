@@ -1,6 +1,6 @@
 " Plugins
 
-call plug#begin()
+call plug#begin('~/.config/nvim/plugged')
 " Plug 'mhinz/vim-startify'
 Plug 'sheerun/vim-polyglot'
 Plug 'uiiaoo/java-syntax.vim'
