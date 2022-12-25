@@ -31,11 +31,15 @@ alias tmux='TERM=xterm-256color tmux'
 alias ls="exa -al --color=always --group-directories-first"
 alias reload="source ~/.zshrc"
 alias sand="cd ~/Desktop/sandbox"
-alias vrc="vi ~/.vimrc"
+alias vrc="vi ~/.config/nvim/init.vim"
 alias zrc="vi ~/.zshrc"
+alias documents="cd ~/Documents"
+alias downloads="cd ~/Downloads"
+
 
 # Class specific
 alias school="cd ~/OneDrive\ -\ Georgia\ Institute\ of\ Technology/School"
+alias fall="cd ~/OneDrive\ -\ Georgia\ Institute\ of\ Technology/School/Fall\ 2022"
 alias matlab="/Applications/MATLAB_R2021b.app/bin/matlab"
 alias ml="cd ~/Library/CloudStorage/OneDrive-GeorgiaInstituteofTechnology/School/Fall\ 2022/CS\ 4641/CS4641_MLProject"
 
@@ -57,4 +61,7 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="/opt/homebrew/lib/ruby/gems/3.1.0/bin:$PATH"
 

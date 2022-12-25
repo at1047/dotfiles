@@ -1,21 +1,25 @@
 " Plugins
 
-" execute pathogen#infect()
-
-call plug#begin('~/.vim/plugged')
-Plug 'mhinz/vim-startify'
+call plug#begin()
+" Plug 'mhinz/vim-startify'
 Plug 'sheerun/vim-polyglot'
 Plug 'uiiaoo/java-syntax.vim'
 " Plug 'ap/vim-css-color'
 Plug 'tpope/vim-surround'
     let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
     let g:surround_{char2nr('b')} = "**\r**"
+
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-repeat'
 Plug 'justinmk/vim-sneak'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mbbill/undotree'
-Plug 'dccsillag/magma-nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'preservim/nerdtree'
+"  let g:webdevicons_enable_nerdtree = 1
+  let g:webdevicons_conceal_nerdtree_brackets = 1
+Plug 'ryanoasis/vim-devicons'
+
+
 Plug 'lervag/vimtex'
     let g:tex_conceal = ''
 "    let g:tex_flavor='latex'
@@ -24,27 +28,27 @@ Plug 'lervag/vimtex'
     let g:vimtex_subfile_start_local=1
 
 Plug 'SirVer/ultisnips'
-    let g:UltiSnipsExpandTrigger = '<tab>'
-    let g:UltiSnipsJumpForwardTrigger = '<tab>'
-    let g:UltiSnipsBackwardsForwardTrigger = '<s-tab>'
-
+    let g:UltiSnipsExpandTrigger = 'c-`'
+    let g:UltiSnipsJumpForwardTrigger = 'c-`'
+"    let g:UltiSnipsBackwardsForwardTrigger = ''
 Plug 'honza/vim-snippets'
+
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
     let g:mkdp_refresh_slow = 1
     let g:mkdp_auto_close = 0
     " let g:mkdp_preview_options = {'disable_sync_scroll': 1}
     let g:mkdp_markdown_css = expand('~/.vim/plugged/markdown-preview.nvim/style.css')
     let g:mkdp_theme = 'light'
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-let g:fzf_action = {
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit'
-      \ }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+
+Plug 'nvim-lua/plenary.nvim' " don't forget to add this one if you don't have it yet!
+Plug 'ThePrimeagen/harpoon'
+Plug 'preservim/tagbar'
+Plug 'weizheheng/nvim-workbench'
 
 call plug#end()
 
@@ -54,8 +58,8 @@ set nu
 set relativenumber
 set fillchars+=vert:\▏
 set noerrorbells
-set tabstop=4 softtabstop=4
-set shiftwidth=4
+set tabstop=2 softtabstop=2
+set shiftwidth=2
 set expandtab
 set smartindent
 filetype plugin indent on
@@ -102,13 +106,36 @@ nnoremap o o<Esc>
 vnoremap <C-c> "*y
 nmap <leader>sp :call <SID>SynStack()<CR>
 
+nnoremap <C-o> :NERDTreeToggle <CR>
 
+nnoremap <leader>lc :VimtexCompileSS<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+nnoremap <leader>ev :e ~/.config/nvim/init.vim<CR>
+
+nnoremap <leader>ha :lua require("harpoon.mark").add_file()<CR>
+nnoremap <leader>hu :lua require("harpoon.ui").toggle_quick_menu()<CR>
+nnoremap <leader>hr :lua require("harpoon.mark").rm_file()<CR>
+nnoremap <leader>hg :lua require("harpoon.ui").nav_file(input())
+" nnoremap <leader>hg :lua require("harpoon.ui").nav_file(input('Param: '))<CR>
+
+nnoremap <leader>bp <Plug>ToggleProjectWorkbench
+nnoremap <leader><CR> <Plug>WorkbenchToggleCheckbox
+
+" nnoremap <leader>hm :lua require("harpoon.mark").add_file()
 
 " QF & Location list Mappings
 nnoremap <leader>qf :bel cw<CR>
 nnoremap <leader>ll :bel lw<CR>
 nnoremap <leader>j :lnext <CR>
 nnoremap <leader>k :lprev <CR>
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+nmap <F8> :TagbarToggle<CR>
 
 " COC Mappings
 inoremap <expr><c-j> pumvisible() ? '<c-n>' : '<c-j>'
@@ -118,18 +145,8 @@ nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gr <Plug>(coc-references)
 nnoremap <leader>cd :CocDiagnostics <CR>
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-
+nnoremap <leader>ls :ls<cr>:b
 
 " Undotree Mappings
 nnoremap <silent> <leader>ud :UndotreeToggle<CR>
@@ -137,17 +154,65 @@ nnoremap <silent> <leader>ud :UndotreeToggle<CR>
 " CSS Color Mappings
 nmap <leader>tcc :call css_color#toggle()<CR>
 
-" FZF Mappings
-nnoremap <silent> <C-p> :ProjectFiles<cr>
-nnoremap <silent> <leader>bs :Buffers<cr>
-
 " Java Mappings
-nnoremap <leader>ju :JUnitTest<space>
-nnoremap <leader>jc :call Javac()<CR>
-nnoremap <leader>jd :call JavaCloseBuf()<CR>
+" nnoremap <leader>ju :JUnitTest<space>
+" nnoremap <leader>jc :call Javac()<CR>
+" nnoremap <leader>jd :call JavaCloseBuf()<CR>
 
-" Vimtex Mappings
+" function! Open() abort
+"     let float = float#create()
+"         " \.name('register')
+"         \.as_scratch()
+"         \.height(3)
+"         \.width(0.8)
+"         \.center()
+"         \.open()
+"
+"     call float.write(0, ['testing', 'testing2'])
+" endfunc
 
+
+
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ CheckBackSpace() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! CheckBackSpace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Ignore errors
+function Null(error, response) abort
+endfunction
+
+augroup hover
+	autocmd!
+	autocmd CursorHold * if !coc#float#has_float()
+        \| if mode() == 'i'
+            \| call CocActionAsync('doHover', 'float', function('Null'))
+            \| call CocActionAsync('highlight', function('Null'))
+        \| endif
+	\| endif
+	autocmd CursorHoldI * if CocAction('ensureDocument')
+		\|silent call CocActionAsync('showSignatureHelp', function('Null'))
+	\| endif
+augroup end
 
 " Vimrc Auto Commands
 augroup AUTOCMD
@@ -169,6 +234,9 @@ set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
 " Helper functions
+"
+"
+command Joy :e ~/Desktop/sandbox/joyeuse/colors/joyeuse.vim
 
 function! s:find_git_root()
   return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
@@ -191,8 +259,4 @@ function! TrimWhiteSpace()
     let l:save = winsaveview()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
-endfunc
-
-function! CSExamMode()
-    setlocal tabstop=2 shiftwidth=2 softtabstop=2
 endfunc
