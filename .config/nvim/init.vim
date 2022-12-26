@@ -1,10 +1,25 @@
 " Plugins
+"
+" lua require('treesitter')
+" autocmd VimEnter * call s:setup_lua()
+" function! s:setup_lua() abort
+" lua<<EOF
+" require('treesitter')
+" EOF
+" endfunction
 
-call plug#begin()
+call plug#begin("~/.config/nvim/plugged")
 " Plug 'mhinz/vim-startify'
-Plug 'sheerun/vim-polyglot'
-Plug 'uiiaoo/java-syntax.vim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+
+Plug 'vim-python/python-syntax'
+" Plug 'sheerun/vim-polyglot'
+" Plug 'uiiaoo/java-syntax.vim'
 " Plug 'ap/vim-css-color'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+Plug 'navarasu/onedark.nvim'
+
 Plug 'tpope/vim-surround'
     let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
     let g:surround_{char2nr('b')} = "**\r**"
@@ -17,6 +32,7 @@ Plug 'mbbill/undotree'
 Plug 'preservim/nerdtree'
 "  let g:webdevicons_enable_nerdtree = 1
   let g:webdevicons_conceal_nerdtree_brackets = 1
+
 Plug 'ryanoasis/vim-devicons'
 
 
@@ -53,6 +69,9 @@ Plug 'weizheheng/nvim-workbench'
 call plug#end()
 
 syntax on
+let g:onedark_config = {
+    \ 'style': 'darker',
+\}
 colorscheme joyeuse
 set nu
 set relativenumber
@@ -106,11 +125,13 @@ nnoremap o o<Esc>
 vnoremap <C-c> "*y
 nmap <leader>sp :call <SID>SynStack()<CR>
 
-nnoremap <C-o> :NERDTreeToggle <CR>
+nnoremap <Leader>pv :NERDTreeToggle <CR>
 
 nnoremap <leader>lc :VimtexCompileSS<CR>
+
 nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>ev :e ~/.config/nvim/init.vim<CR>
+nnoremap <leader>ts :TSHighlightCapturesUnderCursor<CR>
 
 nnoremap <leader>ha :lua require("harpoon.mark").add_file()<CR>
 nnoremap <leader>hu :lua require("harpoon.ui").toggle_quick_menu()<CR>
@@ -124,16 +145,17 @@ nnoremap <leader><CR> <Plug>WorkbenchToggleCheckbox
 " nnoremap <leader>hm :lua require("harpoon.mark").add_file()
 
 " QF & Location list Mappings
-nnoremap <leader>qf :bel cw<CR>
-nnoremap <leader>ll :bel lw<CR>
-nnoremap <leader>j :lnext <CR>
-nnoremap <leader>k :lprev <CR>
+" nnoremap <leader>qf :bel cw<CR>
+" nnoremap <leader>ll :bel lw<CR>
+" nnoremap <leader>j :lnext <CR>
+" nnoremap <leader>k :lprev <CR>
 
 " Find files using Telescope command-line sugar.
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
 
 nmap <F8> :TagbarToggle<CR>
 
@@ -171,7 +193,19 @@ nmap <leader>tcc :call css_color#toggle()<CR>
 "     call float.write(0, ['testing', 'testing2'])
 " endfunc
 
+let NERDTreeQuitOnOpen = 1
+let NERDTreeShowLineNumbers=1
+autocmd FileType nerdtree setlocal relativenumber
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" Start NERDTree when Vim is started without file arguments.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#_select_confirm() :
