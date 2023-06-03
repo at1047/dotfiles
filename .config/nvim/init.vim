@@ -10,15 +10,17 @@
 
 call plug#begin("~/.config/nvim/plugged")
 " Plug 'mhinz/vim-startify'
+"
+Plug 'tpope/vim-dotenv'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 
-Plug 'vim-python/python-syntax'
+" Plug 'vim-python/python-syntax'
 " Plug 'sheerun/vim-polyglot'
 " Plug 'uiiaoo/java-syntax.vim'
 " Plug 'ap/vim-css-color'
-Plug 'catppuccin/vim', { 'as': 'catppuccin' }
-Plug 'navarasu/onedark.nvim'
+" Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+" Plug 'navarasu/onedark.nvim'
 
 Plug 'tpope/vim-surround'
     let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
@@ -30,8 +32,9 @@ Plug 'justinmk/vim-sneak'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mbbill/undotree'
 Plug 'preservim/nerdtree'
+    let g:NERDTreeMinimalMenu=1
 "  let g:webdevicons_enable_nerdtree = 1
-  let g:webdevicons_conceal_nerdtree_brackets = 1
+    let g:webdevicons_conceal_nerdtree_brackets = 1
 
 Plug 'ryanoasis/vim-devicons'
 
@@ -68,10 +71,12 @@ Plug 'weizheheng/nvim-workbench'
 
 call plug#end()
 
-syntax on
-let g:onedark_config = {
-    \ 'style': 'darker',
-\}
+" syntax on
+
+" let g:onedark_config = {
+"     \ 'style': 'darker',
+" \}
+
 colorscheme joyeuse
 set nu
 set relativenumber
@@ -118,12 +123,17 @@ set statusline+=%{(&readonly)?'':'\ '}\ %R
 set statusline+=]
 set statusline+=[%04v] "Cursorcolumn
 
+
 " Remaps and commands
 let mapleader = " "
 nnoremap O O<Esc>
 nnoremap o o<Esc>
 vnoremap <C-c> "*y
 nmap <leader>sp :call <SID>SynStack()<CR>
+
+
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '>-2<CR>gv=gv
 
 nnoremap <Leader>pv :NERDTreeToggle <CR>
 
@@ -132,12 +142,6 @@ nnoremap <leader>lc :VimtexCompileSS<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>ev :e ~/.config/nvim/init.vim<CR>
 nnoremap <leader>ts :TSHighlightCapturesUnderCursor<CR>
-
-nnoremap <leader>ha :lua require("harpoon.mark").add_file()<CR>
-nnoremap <leader>hu :lua require("harpoon.ui").toggle_quick_menu()<CR>
-nnoremap <leader>hr :lua require("harpoon.mark").rm_file()<CR>
-nnoremap <leader>hg :lua require("harpoon.ui").nav_file(input())
-" nnoremap <leader>hg :lua require("harpoon.ui").nav_file(input('Param: '))<CR>
 
 nnoremap <leader>bp <Plug>ToggleProjectWorkbench
 nnoremap <leader><CR> <Plug>WorkbenchToggleCheckbox
@@ -196,6 +200,7 @@ nmap <leader>tcc :call css_color#toggle()<CR>
 let NERDTreeQuitOnOpen = 1
 let NERDTreeShowLineNumbers=1
 autocmd FileType nerdtree setlocal relativenumber
+
 " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
 autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
@@ -204,8 +209,8 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 " Start NERDTree when Vim is started without file arguments.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#_select_confirm() :
@@ -235,18 +240,20 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 function Null(error, response) abort
 endfunction
 
-augroup hover
-	autocmd!
-	autocmd CursorHold * if !coc#float#has_float()
-        \| if mode() == 'i'
-            \| call CocActionAsync('doHover', 'float', function('Null'))
-            \| call CocActionAsync('highlight', function('Null'))
-        \| endif
-	\| endif
-	autocmd CursorHoldI * if CocAction('ensureDocument')
-		\|silent call CocActionAsync('showSignatureHelp', function('Null'))
-	\| endif
-augroup end
+
+
+" augroup hover
+" 	autocmd!
+" 	autocmd CursorHold * if !coc#float#has_float()
+"         \| if mode() == 'i'
+"             \| call CocActionAsync('doHover', 'float', function('Null'))
+"             \| call CocActionAsync('highlight', function('Null'))
+"         \| endif
+" 	\| endif
+" 	autocmd CursorHoldI * if CocAction('ensureDocument')
+" 		\|silent call CocActionAsync('showSignatureHelp', function('Null'))
+" 	\| endif
+" augroup end
 
 " Vimrc Auto Commands
 augroup AUTOCMD
