@@ -35,6 +35,7 @@ alias vrc="vi ~/.config/nvim/init.vim"
 alias zrc="vi ~/.zshrc"
 alias documents="cd ~/Documents"
 alias downloads="cd ~/Downloads"
+alias arduino="cd ~/Documents/Arduino"
 
 
 # Class specific
