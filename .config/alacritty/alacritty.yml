@@ -57,7 +57,4 @@ shell:
   #   program: /bin/zsh
   #   args:
   #     - "tmux"
-key_bindings:
-  - { key: V, mods: Control, action: Paste }
-  - { key: C, mods: Control, action: Copy }
 
