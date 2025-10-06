@@ -220,9 +220,5 @@ export PATH="/opt/homebrew/lib/ruby/gems/3.1.0/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 
 
-<<<<<<< HEAD
 # Created by `pipx` on 2025-09-24 17:35:34
 export PATH="$PATH:/Users/andrew/.local/bin"
-=======
-export PATH="/usr/local:$PATH"
->>>>>>> awesome
