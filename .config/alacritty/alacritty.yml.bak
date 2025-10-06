@@ -28,12 +28,13 @@ window:
   # - none: neither borders nor title bar
   # - transparent: title bar, transparent background and title bar buttons
   # - buttonless: title bar, transparent background, but no title bar buttons
-  decorations: buttonless
+  decorations: full
 
   startup_mode: Maximized
 
   # Opacity
   opacity: 0.93
+
 
 
 font:
@@ -56,3 +57,4 @@ shell:
   #   program: /bin/zsh
   #   args:
   #     - "tmux"
+
