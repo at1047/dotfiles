@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -76,20 +76,20 @@ export ZSH="$HOME/.oh-my-zsh"
 # autoload -Uz compinit && compinit
 
 # ~/.oh-my-zsh/custom/plugins/
-plugins=(
-    git
-    # docker
-    # asdf
-    # zsh-autosuggestions
-    # zsh-completions 
-    zsh-history-substring-search 
-    zsh-syntax-highlighting
-    # fzf-tab
-)
-source $ZSH/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# 
-source $ZSH/oh-my-zsh.sh
+# plugins=(
+#     git
+#     # docker
+#     # asdf
+#     # zsh-autosuggestions
+#     # zsh-completions 
+#     zsh-history-substring-search 
+#     zsh-syntax-highlighting
+#     # fzf-tab
+# )
+# source $ZSH/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# # 
+# source $ZSH/oh-my-zsh.sh
 
 # zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'
 # zstyle ':completion:*' completer _complete
