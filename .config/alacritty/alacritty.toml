@@ -1,0 +1,28 @@
+general.import = ["~/.config/alacritty/everforest_dark.toml"]
+# general.import = ["~/.config/alacritty/gruvbox.toml"]
+
+
+general.live_config_reload = true
+
+[window]
+# dimensions are commented out, as in your original config
+# dimensions = { columns = 100, lines = 85 }
+
+padding = { x = 15, y = 15 }
+dynamic_padding = false
+decorations = "buttonless"
+startup_mode = "Maximized"
+opacity = 0.97
+
+[font]
+size = 11
+
+[font.normal]
+family = "DroidSansMono Nerd Font Mono"
+
+# draw_bold_text_with_bright_colors = false
+
+[terminal.shell]
+program = "zsh"
+args = ["-l", "-c", "tmux attach || tmux new -s main"]
+

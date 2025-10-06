@@ -1,7 +1,0 @@
-{
-    "coc.preferences.messageLevel": "error",
-    "pyright.inlayHints.variableTypes": false,
-    "pyright.inlayHints.functionReturnTypes": false,
-    "python.pythonPath": "~/.config/nvim/plugins/pyright",
-    "pyright.disableDiagnostics": true
-}
