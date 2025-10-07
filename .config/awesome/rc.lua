@@ -1,3 +1,6 @@
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
@@ -21,6 +24,7 @@ require("awful.hotkeys_popup.keys")
 -- Load Debian menu entries
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
+-- local pulse = require("pulseaudio_widget")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -52,8 +56,8 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
-editor = os.getenv("EDITOR") or "editor"
+terminal = "alacritty"
+editor = os.getenv("vi") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -65,18 +69,19 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
+    -- awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.tile.left,
+    -- awful.layout.suit.tile.bottom,
+    -- awful.layout.suit.tile.top,
+    -- awful.layout.suit.fair,
+    -- awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral.dwindle,
+    -- awful.layout.suit.max,
+    -- awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.magnifier,
+    -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -230,6 +235,16 @@ awful.screen.connect_for_each_screen(function(s)
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
+      volume_widget(),
+      battery_widget{
+        show_current_level = true,
+        display_notification = true
+      },
+      -- brightness_widget{
+      --       type = 'icon_and_text',
+      --       program = 'brightnessctl',
+      --       step = 2,        
+      --   },
             s.mylayoutbox,
         },
     }
@@ -267,8 +282,8 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    -- awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-    --           {description = "show main menu", group = "awesome"}),
+    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
+              {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
@@ -293,11 +308,9 @@ globalkeys = gears.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, "Shift"   }, "w", function () awful.util.spawn("firefox") end,
-              {description = "open a browser", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "e", awesome.quit,
+    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
@@ -330,22 +343,50 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+    awful.key({ modkey },            "r",     function () awful.util.spawn("rofi -show run") end,
               {description = "run prompt", group = "launcher"}),
 
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run {
-                    prompt       = "Run Lua code: ",
-                    textbox      = awful.screen.focused().mypromptbox.widget,
-                    exe_callback = awful.util.eval,
-                    history_path = awful.util.get_cache_dir() .. "/history_eval"
-                  }
-              end,
-              {description = "lua execute prompt", group = "awesome"}),
-    -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+-- awful.key({}, "XF86AudioLowerVolume", function ()
+--     awful.util.spawn("amixer -q -D pulse sset Master 5%-", false) end),
+-- awful.key({}, "XF86AudioRaiseVolume", function ()
+--     awful.util.spawn("amixer -q -D pulse sset Master 5%+", false) end),
+-- awful.key({}, "XF86AudioMute", function ()
+--     awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end),
+-- Media Keys
+awful.key({}, "XF86AudioPlay", function()
+    awful.util.spawn("playerctl play-pause", false) end),
+awful.key({}, "XF86AudioNext", function()
+    awful.util.spawn("playerctl next", false) end),
+awful.key({}, "XF86AudioPrev", function()
+    awful.util.spawn("playerctl previous", false) end),
+awful.key({}, "XF86AudioRaiseVolume", function() volume_widget:inc(5) end),
+awful.key({}, "XF86AudioLowerVolume", function() volume_widget:dec(5) end),
+awful.key({}, "XF86AudioMute", function() volume_widget:toggle() end),
+  awful.key({}, "XF86MonBrightnessUp", function ()
+    local bright = "brightnessctl set '+10%'"
+    awful.spawn.easy_async(bright, function(stdout, stderr, reason, exit_code)
+    end)
+  end),
+  awful.key({}, "XF86MonBrightnessDown", function ()
+    local bright = "brightnessctl set '10%-'"
+    awful.spawn.easy_async(bright, function(stdout, stderr, reason, exit_code)
+    end)
+  end),
+  -- awful.key({}, "XF86MonBrightnessDown", function () awful.spawn( "brightnessctl -d amdgpu_bl0 s -10%" ) end),
+  -- awful.key({}, "XF86MonBrightnessDown", function () brightness_widget:dec() end, {description = "decrease brightness", group = "custom"}),
+  awful.key({ modkey }, "x",
+    function ()
+      awful.prompt.run {
+        prompt       = "Run Lua code: ",
+        textbox      = awful.screen.focused().mypromptbox.widget,
+        exe_callback = awful.util.eval,
+        history_path = awful.util.get_cache_dir() .. "/history_eval"
+      }
+    end,
+    {description = "lua execute prompt", group = "awesome"}),
+  -- Menubar
+  awful.key({ modkey }, "p", function() menubar.show() end,
+    {description = "show the menubar", group = "launcher"})
 )
 
 clientkeys = gears.table.join(
@@ -355,7 +396,7 @@ clientkeys = gears.table.join(
             c:raise()
         end,
         {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey            }, "w",      function (c) c:kill()                         end,
+    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
@@ -507,10 +548,10 @@ awful.rules.rules = {
         }
       }, properties = { floating = true }},
 
-    -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = false }
-    },
+    -- -- Add titlebars to normal clients and dialogs
+    -- { rule_any = {type = { "normal", "dialog" }
+    --   }, properties = { titlebars_enabled = true }
+    -- },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -573,14 +614,29 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
--- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
-end)
+-- -- Enable sloppy focus, so that focus follows mouse.
+-- client.connect_signal("mouse::enter", function(c)
+--     c:emit_signal("request::activate", "mouse_enter", {raise = false})
+-- end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
---
-awful.spawn.with_shell("picom")
-awful.spawn.with_shell("feh --bg-fill --no-xinerama ~/Downloads/v960-ning-11.jpg")
+-- awful.key({ }, "XF86AudioRaiseVolume", function() ... end, {description = "raise volume", group = "system"})
+-- awful.key({ }, "XF86AudioLowerVolume", function() ... end, {description = "lower volume", group = "system"})
+-- awful.util.table.join(
+--   -- Audio
+--   awful.key({ }, "XF86AudioRaiseVolume", pulse.volume_up),
+--   awful.key({ }, "XF86AudioLowerVolume", pulse.volume_down),
+--   awful.key({ }, "XF86AudioMute",  pulse.toggle_muted),
+--   -- Microphone
+--   awful.key({"Shift"}, "XF86AudioRaiseVolume", pulse.volume_up_mic),
+--   awful.key({"Shift"}, "XF86AudioLowerVolume", pulse.volume_down_mic),
+--   awful.key({ }, "XF86MicMute",  pulse.toggle_muted_mic)
+-- )
+
+beautiful.useless_gap = 5
+
+awful.spawn.with_shell("compton")
+awful.spawn.with_shell("feh --bg-scale ~/Pictures/gradient_wallpaper.jpg")
+-- awful.spawn.with_shell("")
