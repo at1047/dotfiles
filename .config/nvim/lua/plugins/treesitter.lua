@@ -4,6 +4,9 @@ return {
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+    dependencies = {
+      "windwp/nvim-ts-autotag",
+    },
     opts = {
       ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'latex' },
       -- Autoinstall languages that are not installed
@@ -16,6 +19,10 @@ return {
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      autotag = {
+        -- Setup autotag using treesitter config.
+        enable = true,
+      },
       -- init = function()
       --   require("nvim-treesitter.install").prefer_git = false
       --   require("nvim-treesitter.install").compilers = { "gcc" }

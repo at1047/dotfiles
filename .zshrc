@@ -172,7 +172,8 @@ alias arduino="cd ~/Documents/Arduino"
 alias air="~/go/bin/air"
 alias digiocean="ssh andrew@143.198.190.249"
 alias joy="vi ~/Desktop/sandbox/joyeuse/colors/joyeuse.vim"
-alias berkeley="cd '/Users/andrew/Documents/Berkeley/Fa25'"
+alias berkeley="cd '/home/andrew/Documents/berkeley/Fa25'"
+alias myscrot='scrot -s ~/Pictures/Screenshots/%b%d::%H%M%S.png'
 
 
 function tm() {
@@ -202,14 +203,14 @@ function arduino_upload() {
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/andrew/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/andrew/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/andrew/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/andrew/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/andrew/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/andrew/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/andrew/miniconda3/bin:$PATH"
+        export PATH="/home/andrew/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -221,8 +222,17 @@ export PATH="$GOPATH/bin:$PATH"
 
 
 # Created by `pipx` on 2025-09-24 17:35:34
+export PATH="$PATH:/usr/local/include"
 export PATH="$PATH:/Users/andrew/.local/bin"
+export PATH="$PATH:/Users/andrew/.local/share/applications"
+export PATH="$PATH:/usr/local/texlive/2025/bin/x86_64-linux"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:~/.mujoco/mujoco200/bin"
+export MUJOCO_PY_MUJOCO_PATH="$HOME/.mujoco/mujoco200"
+export MUJOCO_PY_MJKEY_PATH="$HOME/.mujoco/mujoco200/bin/mjkey.txt"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/andrew/.mujoco/mujoco200/bin

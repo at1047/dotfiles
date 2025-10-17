@@ -1,6 +1,7 @@
-general.import = ["~/.config/alacritty/everforest_dark.toml"]
+# general.import = ["~/.config/alacritty/everforest_dark.toml"]
 # general.import = ["~/.config/alacritty/gruvbox.toml"]
 
+general.import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
 
 general.live_config_reload = true
 
@@ -12,17 +13,18 @@ padding = { x = 15, y = 15 }
 dynamic_padding = false
 decorations = "buttonless"
 # startup_mode = "Maximized"
-opacity = 0.85
+opacity = 0.95
 
 [font]
 size = 6
 
-# [font.normal]
-# family = "DroidSansMono Nerd Font Mono"
+[font.normal]
+# family = "DroidSansM Nerd Font"
+family = "Hack Nerd Font Mono"
 
 # draw_bold_text_with_bright_colors = false
 
 [terminal.shell]
 program = "zsh"
-args = ["-l", "-c", "tmux attach || tmux new -s main"]
+# args = ["-l", "-c", "tmux attach || tmux new -s main"]
 

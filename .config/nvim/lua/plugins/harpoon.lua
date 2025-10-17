@@ -14,9 +14,9 @@ return {
 
       -- Select files 1–4
       vim.keymap.set("n", "<leader>h", function() harpoon:list():select(1) end)
-      vim.keymap.set("n", "<leader>t", function() harpoon:list():select(2) end)
-      vim.keymap.set("n", "<leader>n", function() harpoon:list():select(3) end)
-      vim.keymap.set("n", "<leader>s", function() harpoon:list():select(4) end)
+      vim.keymap.set("n", "<leader>j", function() harpoon:list():select(2) end)
+      vim.keymap.set("n", "<leader>k", function() harpoon:list():select(3) end)
+      vim.keymap.set("n", "<leader>l", function() harpoon:list():select(4) end)
 
       -- Navigate previous & next buffers
       -- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
