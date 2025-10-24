@@ -11,6 +11,10 @@ return {
         paths = '~/.config/nvim/LuaSnip/',
       })
 
+      require("luasnip").config.set_config({
+        enable_autosnippets = true,
+      })
+
       -- Tab and Shift-Tab for jumping
       vim.cmd([[
         " Use Tab to expand and jump through snippets
@@ -20,7 +24,7 @@ return {
         " Use Shift-Tab to jump backwards through snippets
         imap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
         smap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
-      ]])
+        ]])
     end,
   },
 }

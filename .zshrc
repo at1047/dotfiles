@@ -223,6 +223,7 @@ export PATH="$GOPATH/bin:$PATH"
 
 # Created by `pipx` on 2025-09-24 17:35:34
 export PATH="$PATH:/usr/local/include"
+export PATH="$PATH:/usr/local/share/applications"
 export PATH="$PATH:/Users/andrew/.local/bin"
 export PATH="$PATH:/Users/andrew/.local/share/applications"
 export PATH="$PATH:/usr/local/texlive/2025/bin/x86_64-linux"
@@ -233,6 +234,6 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:~/.mujoco/mujoco200/bin"
-export MUJOCO_PY_MUJOCO_PATH="$HOME/.mujoco/mujoco200"
-export MUJOCO_PY_MJKEY_PATH="$HOME/.mujoco/mujoco200/bin/mjkey.txt"
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/andrew/.mujoco/mujoco200/bin
+export MUJOCO_PY_MUJOCO_PATH="$HOME/.mujoco/mujoco210"
+export MUJOCO_PY_MJKEY_PATH="$HOME/.mujoco/mujoco210/bin/mjkey.txt"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/andrew/.mujoco/mujoco210/bin
