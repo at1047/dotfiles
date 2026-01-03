@@ -3,9 +3,10 @@ require("remap")
 require("config.lazy")
 
 -- vim.cmd("colorscheme onedark")
-vim.cmd("colorscheme everforest")
+-- vim.cmd("colorscheme everforest")
 
 -- vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme tokyonight")
 
 -- vim.keymap.set('n', ',r', ':w<CR>:silent !/Applications/Skim.app/Contents/SharedSupport/displayline <C-r>=line(".")<CR> %<.pdf<CR>', {
 --   desc = "Save and forward search with Skim",

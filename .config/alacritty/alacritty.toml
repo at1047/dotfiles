@@ -2,6 +2,7 @@
 # general.import = ["~/.config/alacritty/gruvbox.toml"]
 
 general.import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
+# general.import = ["~/.config/alacritty/themes/themes/tokyo_night.toml"]
 
 general.live_config_reload = true
 
@@ -11,16 +12,17 @@ general.live_config_reload = true
 
 padding = { x = 15, y = 15 }
 dynamic_padding = false
-decorations = "buttonless"
-# startup_mode = "Maximized"
+# decorations = "buttonless"
+decorations = "none"
+startup_mode = "Maximized"
 opacity = 0.95
 
 [font]
-size = 10
+size = 12
 
 [font.normal]
-# family = "DroidSansM Nerd Font"
-family = "Hack Nerd Font Mono"
+family = "DroidSansM Nerd Font"
+# family = "Hack Nerd Font Mono"
 
 # draw_bold_text_with_bright_colors = false
 
@@ -28,3 +30,5 @@ family = "Hack Nerd Font Mono"
 program = "zsh"
 # args = ["-l", "-c", "tmux attach || tmux new -s main"]
 
+[selection]
+save_to_clipboard = true

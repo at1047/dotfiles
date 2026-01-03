@@ -1,43 +1,56 @@
 return {
-  -- add gruvbox
-  {
-    "ellisonleao/gruvbox.nvim",
+	-- add gruvbox
+	{
+		"ellisonleao/gruvbox.nvim",
+		opts = {
+			transparent_mode = true,
+			styles = {
+				sidebars = "transparent",
+				float = "transparent",
+			},
+		},
+	},
+	{
+		"neanias/everforest-nvim",
+		version = false,
+		lazy = false,
+		priority = 1000, -- make sure to load this before all the other start plugins
+		-- Optional; default configuration will be used if setup isn't called.
+		config = function()
+			require("everforest").setup({
+				transparent_background_level = 2,
+				-- Your config here
+			})
+		end,
+	},
+	-- Using Lazy
+	{
+		"navarasu/onedark.nvim",
+		priority = 1000, -- make sure to load this before all the other start plugins
+		config = function()
+			require("onedark").setup({
+				style = "darker",
+			})
+			-- Enable theme
+			require("onedark").load()
+		end,
+	},
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
     opts = {
-      transparent_mode = true,
-      styles = {
-        sidebars = "transparent",
-        float = "transparent",
-      },
+    transparent = true, -- Key setting for general transparency
+    styles = { -- Optional: control specific window styles
+      -- sidebars = { "qf", "terminal" }, -- Example for selective transparency
     },
   },
-  {"neanias/everforest-nvim",
-    version = false,
-    lazy = false,
-    priority = 1000, -- make sure to load this before all the other start plugins
-    -- Optional; default configuration will be used if setup isn't called.
-    config = function()
-      require("everforest").setup({
-        transparent_background_level = 2,
-        -- Your config here
-      })
-    end,
-  },
-  -- Using Lazy
-{
-  "navarasu/onedark.nvim",
-  priority = 1000, -- make sure to load this before all the other start plugins
-  config = function()
-    require('onedark').setup {
-      style = 'darker'
-    }
-    -- Enable theme
-    require('onedark').load()
-  end
-}
-  -- {
-  --   "sainnhe/everforest",
-  --   lazy = false,
-  --   name = "everforest",
-  --   opts = {},
-  -- }
+	},
+	-- {
+	--   "sainnhe/everforest",
+	--   lazy = false,
+	--   name = "everforest",
+	--   opts = {},
+	-- }
 }
