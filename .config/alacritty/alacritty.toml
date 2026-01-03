@@ -8,6 +8,8 @@ general.live_config_reload = true
 # dimensions are commented out, as in your original config
 # dimensions = { columns = 100, lines = 85 }
 
+option_as_alt = "Both"
+
 padding = { x = 15, y = 15 }
 dynamic_padding = false
 decorations = "buttonless"
@@ -24,5 +26,5 @@ family = "DroidSansMono Nerd Font Mono"
 
 [terminal.shell]
 program = "zsh"
-args = ["-l", "-c", "tmux attach || tmux new -s main"]
+# args = ["-l", "-c", "tmux attach || tmux new -s main"]
 
