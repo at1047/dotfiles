@@ -1,7 +1,7 @@
-# general.import = ["~/.config/alacritty/everforest_dark.toml"]
+general.import = ["~/.config/alacritty/everforest_dark.toml"]
 # general.import = ["~/.config/alacritty/gruvbox.toml"]
 
-general.import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
+# general.import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
 # general.import = ["~/.config/alacritty/themes/themes/tokyo_night.toml"]
 
 general.live_config_reload = true

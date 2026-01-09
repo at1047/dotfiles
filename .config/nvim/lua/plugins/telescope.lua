@@ -67,10 +67,26 @@ return {
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
-      vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })
-      vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind [B]uffer' })
-      vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
+      -- vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
+      -- vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })
+      -- vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind [B]uffer' })
+      -- vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
+
+      vim.keymap.set('n', '<leader>ff', function()
+        require('telescope.builtin').find_files({ cwd = vim.fn.argv(0) })
+      end, { desc = "[F]ind [F]iles" })
+
+      vim.keymap.set('n', '<leader>fg', function()
+        require('telescope.builtin').live_grep({ cwd = vim.fn.argv(0) })
+      end, { desc = "[F]ind by [G]rep" })
+
+      vim.keymap.set('n', '<leader>fb', function()
+        require('telescope.builtin').buffers({ cwd = vim.fn.argv(0) })
+      end, { desc = "[F]ind [B]uffer" })
+
+      -- vim.keymap.set('n', '<leader>fh', function()
+      --   require('telescope.builtin').help_tags({ cwd = vim.fn.argv(0) })
+      -- end, { desc = "Find files in current dir" })
       -- vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       -- vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       -- vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
