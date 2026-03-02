@@ -19,17 +19,6 @@ export EDITOR='nvim'
 # 3. Do NOT manually add /bin or /usr/bin (System handles this).
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="$PATH:/usr/local/texlive/2025/bin/x86_64-linux"
-
-# =============================================================================
-# 3. ZSH SETTINGS & COMPLETION
-# =============================================================================
-# Case insensitive completion (lowercase matches uppercase)
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
-
-# Initialize completion system
-autoload -Uz compinit
-compinit
-
 # =============================================================================
 # 4. ALIASES & FUNCTIONS
 # =============================================================================
@@ -56,7 +45,6 @@ alias zrc="vi ~/.zshrc"
 alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}\t{{.Status}}"'
 alias air="~/go/bin/air"
 alias digiocean="ssh andrew@143.198.190.249"
-alias myscrot='scrot -s ~/Pictures/Screenshots/%b%d::%H%M%S.png'
 
 # Tmux Smart Switcher
 function tm() {
@@ -81,6 +69,8 @@ function tm() {
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+
 
 # MuJoCo Physics Engine
 export MUJOCO_PY_MUJOCO_PATH="$HOME/.mujoco/mujoco210"
@@ -119,3 +109,19 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 
+# =============================================================================
+# 3. ZSH SETTINGS & COMPLETION
+# =============================================================================
+# Case insensitive completion (lowercase matches uppercase)
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+
+# Initialize completion system
+autoload -Uz compinit
+compinit
+
+
+
+
+
+# opencode
+export PATH=/home/andrew/.opencode/bin:$PATH

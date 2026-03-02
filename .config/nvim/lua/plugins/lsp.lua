@@ -27,7 +27,39 @@ return {
       { 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by blink.cmp
-      'saghen/blink.cmp',
+      -- {
+      --   'saghen/blink.cmp',
+      --   -- Optional: download pre-built binaries (faster)
+      --   version = 'v0.*', 
+      --   opts = {
+      --     -- 'default' for all keymaps, 'super-tab' for those used to vscode
+      --     keymap = {
+      --       preset = 'none',
+      --       -- Tab to complete the first/selected item
+      --       ['<Tab>'] = { 'accept', 'fallback' },
+
+      --       -- Use Alt + j/k to navigate the completion list
+      --       ['<M-j>'] = { 'select_next', 'fallback' },
+      --       ['<M-k>'] = { 'select_prev', 'fallback' },
+
+      --       -- Keep these as standard fallbacks
+      --       ['<Up>'] = { 'select_prev', 'fallback' },
+      --       ['<Down>'] = { 'select_next', 'fallback' },
+      --     },
+
+      --     appearance = {
+      --       -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+      --       -- Useful for maintaining a consistent look
+      --       use_nvim_cmp_as_default = true,
+      --       nerd_font_variant = 'mono'
+      --     },
+
+      --     -- Default sources for nodes
+      --     sources = {
+      --       default = { 'lsp', 'path', 'snippets', 'buffer' },
+      --     },
+      --   },
+      -- },
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -91,7 +123,7 @@ return {
           -- map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
 
           -- -- Find references for the word under your cursor.
-          -- map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
           -- -- Jump to the implementation of the word under your cursor.
           -- --  Useful when your language has ways of declaring types without an actual implementation.
@@ -169,30 +201,41 @@ return {
       -- Diagnostic Config
       -- See :help vim.diagnostic.Opts
       vim.diagnostic.config {
+        -- DISABLE BY DEFAULT:
+        virtual_text = false, -- No inline text
+        signs = false,        -- No gutter icons
+        underline = true,    -- No red squiggles
+        -- Keep these settings for when you manually check errors:
         severity_sort = true,
         float = { border = 'rounded', source = 'if_many' },
-        underline = { severity = vim.diagnostic.severity.ERROR },
-        signs = vim.g.have_nerd_font and {
-          text = {
-            [vim.diagnostic.severity.ERROR] = '󰅚 ',
-            [vim.diagnostic.severity.WARN] = '󰀪 ',
-            [vim.diagnostic.severity.INFO] = '󰋽 ',
-            [vim.diagnostic.severity.HINT] = '󰌶 ',
-          },
-        } or {},
-        virtual_text = {
-          source = 'if_many',
-          spacing = 2,
-          format = function(diagnostic)
-            local diagnostic_message = {
-              [vim.diagnostic.severity.ERROR] = diagnostic.message,
-              [vim.diagnostic.severity.WARN] = diagnostic.message,
-              [vim.diagnostic.severity.INFO] = diagnostic.message,
-              [vim.diagnostic.severity.HINT] = diagnostic.message,
-            }
-            return diagnostic_message[diagnostic.severity]
-          end,
-        },
+
+
+
+
+        -- severity_sort = true,
+        -- float = { border = 'rounded', source = 'if_many' },
+        -- underline = { severity = vim.diagnostic.severity.ERROR },
+        -- signs = vim.g.have_nerd_font and {
+        --   text = {
+        --     [vim.diagnostic.severity.ERROR] = '󰅚 ',
+        --     [vim.diagnostic.severity.WARN] = '󰀪 ',
+        --     [vim.diagnostic.severity.INFO] = '󰋽 ',
+        --     [vim.diagnostic.severity.HINT] = '󰌶 ',
+        --   },
+        -- } or {},
+        -- virtual_text = {
+        --   source = 'if_many',
+        --   spacing = 2,
+        --   format = function(diagnostic)
+        --     local diagnostic_message = {
+        --       [vim.diagnostic.severity.ERROR] = diagnostic.message,
+        --       [vim.diagnostic.severity.WARN] = diagnostic.message,
+        --       [vim.diagnostic.severity.INFO] = diagnostic.message,
+        --       [vim.diagnostic.severity.HINT] = diagnostic.message,
+        --     }
+        --     return diagnostic_message[diagnostic.severity]
+        --   end,
+        -- },
       }
       
       -- LSP servers and clients are able to communicate to each other what features they support.
@@ -211,9 +254,19 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {
+          cmd = {
+            "clangd",
+            "--background-index",
+            "--clang-tidy",
+            "--header-insertion=iwyu",
+            "--completion-style=detailed",
+            "--function-arg-placeholders",
+            "--fallback-style=llvm",
+          },
+        },
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -257,7 +310,7 @@ return {
       -- vim.list_extend(ensure_installed, {
       --   'stylua', -- Used to format Lua code
       -- })
-      -- require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)

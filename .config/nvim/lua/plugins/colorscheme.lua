@@ -35,7 +35,14 @@ return {
 			require("onedark").load()
 		end,
 	},
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    opts = {
+            transparent_background = true,
+        },
+  },
 	{
 		"folke/tokyonight.nvim",
 		lazy = false,
@@ -44,8 +51,8 @@ return {
     transparent = true, -- Key setting for general transparency
     styles = { -- Optional: control specific window styles
       -- sidebars = { "qf", "terminal" }, -- Example for selective transparency
+      },
     },
-  },
 	},
 	-- {
 	--   "sainnhe/everforest",
