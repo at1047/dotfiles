@@ -55,5 +55,10 @@ return {
         end)
       end,
     })
+
+    vim.cmd('hi GitSignsAddLn guibg=#1a2a1a')
+    vim.cmd('hi GitSignsChangeLn guibg=#1a1a2a')
+    vim.cmd('hi GitSignsDeleteLn guibg=#2a1a1a')
+    vim.cmd('hi GitSignsDeleteVirtLn guifg=#555555 guibg=#2a1a1a')
   end,
 }
