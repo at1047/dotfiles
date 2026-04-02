@@ -103,6 +103,8 @@ else
 fi
 unset __conda_setup
 
+export MAMBA_ROOT_PREFIX=~/mamba
+
 # alias python="/opt/miniconda3/bin/python"
 # alias pip="/opt/miniconda3/bin/pip"
 
@@ -120,7 +122,7 @@ autoload -Uz compinit
 compinit
 
 
-
+bindkey '^R' history-incremental-search-backward
 
 
 # opencode

@@ -1,64 +1,42 @@
 return {
-  "lewis6991/gitsigns.nvim",
-  event = "BufReadPre",
-  config = function()
-    local gs_group = vim.api.nvim_create_augroup('GitsignsExternalSync', { clear = true })
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {
+      signcolumn = false,
+      numhl = false,
+      linehl = false,
+      current_line_blame = false,
+      word_diff = false,
 
-    require("gitsigns").setup({
+      -- optional: avoid staged markers entirely
       signs_staged_enable = false,
-      signs = {
-        add          = { text = "│" },
-        change       = { text = "│" },
-        delete       = { text = "_" },
-        topdelete    = { text = "‾" },
-        changedelete = { text = "~" },
-        untracked    = { text = "┆" },
+
+      -- optional: prevent default mappings if you truly only want backend use
+      on_attach = function(_) end,
+    },
+  },
+
+  {
+    "petertriho/nvim-scrollbar",
+    dependencies = {
+      "lewis6991/gitsigns.nvim",
+    },
+    opts = {
+      handlers = {
+        diagnostic = false,
+        search = false,
+        cursor = false,
+        gitsigns = true,
       },
-
-      on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
-
-        local function toggle_review_overlay_mode()
-          local show = not (vim.b[bufnr].gitsigns_review_overlay or false)
-          vim.b[bufnr].gitsigns_review_overlay = show
-          gs.toggle_linehl(show)
-          gs.toggle_deleted(show)
-
-          if show then
-            print("[Gitsigns] Review overlay: ON")
-            vim.cmd('hi StatusLine guibg=#2e3b30')
-          else
-            print("[Gitsigns] Review overlay: OFF")
-            vim.cmd('hi StatusLine guibg=NONE')
-          end
-        end
-
-        vim.keymap.set("n", "<leader>gr", toggle_review_overlay_mode, { buffer = bufnr })
-        vim.keymap.set("n", "<leader>hs", gs.stage_hunk, { buffer = bufnr })
-        vim.keymap.set("n", "<leader>hr", gs.reset_hunk, { buffer = bufnr })
-        vim.keymap.set("n", "<leader>hu", gs.undo_stage_hunk, { buffer = bufnr })
-      end,
-    })
-
-    -- :e! replaces buffer content but doesn't fire TextChanged, so gitsigns
-    -- never re-diffs. Emit TextChanged after the reload to nudge it.
-    vim.api.nvim_create_autocmd('BufReadPost', {
-      group = gs_group,
-      callback = function(args)
-        if not package.loaded.gitsigns then return end
-        if vim.bo[args.buf].buftype ~= '' then return end
-        if not vim.b[args.buf].gitsigns_head then return end
-        vim.schedule(function()
-          if vim.api.nvim_buf_is_valid(args.buf) then
-            vim.api.nvim_exec_autocmds('TextChanged', { buffer = args.buf })
-          end
-        end)
-      end,
-    })
-
-    vim.cmd('hi GitSignsAddLn guibg=#1a2a1a')
-    vim.cmd('hi GitSignsChangeLn guibg=#1a1a2a')
-    vim.cmd('hi GitSignsDeleteLn guibg=#2a1a1a')
-    vim.cmd('hi GitSignsDeleteVirtLn guifg=#555555 guibg=#2a1a1a')
-  end,
+      marks = {
+        GitAdd    = { text = "▎" },
+        GitChange = { text = "▎" },
+        GitDelete = { text = "▎" }
+      }
+    },
+    config = function(_, opts)
+      require("scrollbar").setup(opts)
+      require("scrollbar.handlers.gitsigns").setup()
+    end,
+  },
 }

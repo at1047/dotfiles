@@ -44,7 +44,16 @@ return {
 
     -- Optional: Define your sources
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'snippets', 'lsp', 'path', 'buffer' },
+      providers = {
+        snippets = {
+          score_offset = 100, -- Boost snippets to the top
+        },
+        lsp = {
+          score_offset = 0,
+        },
+      },
     },
+
   },
 }

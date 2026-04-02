@@ -29,7 +29,7 @@ return {
   s({ trig = "ans", dscr = "Expands to Answer block" },
     {
       t({
-        "\\vspace{1em}",
+        -- "\\vspace{1em}",
         "\\textbf{Answer:}",
       }),
       i(0) -- Specify final cursor position
